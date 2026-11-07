@@ -1,30 +1,33 @@
 import pool from "../config/db.js"
+import { ConflictError, InternalServerError } from "../utils/error.js"
 
-class RoleService{
- async getRoles(){
-    let roles = await pool.query("select * from roles")
-
-    return {
-        status:200,
-        data:roles.rows
-    }
- }
-
-   async  createRole(req){
-        const {name} = req.body
-
-        const existRole = await pool.query("select * from roles where name=$1", [name])
-        if (existRole.rows.length){
-            return {
-             status: 409,
-             message: "Role allready exists"
-            }
-        }
-        await pool.query(`insert into roles(name) values ($1)`, [name])
+class RoleService {
+    async getRoles() {
+        let roles = await pool.query("select * from roles")
 
         return {
-            status:201,
-            message: "Role created!"
+            status: 200,
+            data: roles.rows
+        }
+    }
+
+    async createRole(req, next) {
+        try {
+            const { name } = req.body
+            console.log(a)
+            const existRole = await pool.query("select * from roles where name=$1", [name])
+            if (existRole.rows.length) {
+                return next(new ConflictError(409, "Role already exists"))
+            }
+
+            await pool.query(`insert into roles(name) values ($1)`, [name])
+
+            return {
+                status: 201,
+                message: "Role created!"
+            }
+        } catch (error) {
+            next(new InternalServerError(500, error))
         }
     }
 }
