@@ -3,3 +3,12 @@
 [function toLocaleString() { [native code] }]_POST_/api/v1/roles_ReferenceError: a is not defined
 [11/7/2026, 2:00:53 PM]_POST_/api/v1/roles_ReferenceError: a is not defined
 [11/7/2026, 4:04:50 PM]_POST_/api/v1/teachers_next is not defined
+[11/9/2026, 8:02:17 PM]_POST_/api/v1/login_Cannot read properties of undefined (reading 'length')
+[11/9/2026, 8:02:58 PM]_POST_/api/v1/login_Cannot read properties of undefined (reading 'length')
+[11/9/2026, 8:07:28 PM]_POST_/api/v1/login_Cannot read properties of undefined (reading 'length')
+[11/9/2026, 8:09:41 PM]_POST_/api/v1/login_pchstr must be a non-empty string
+[11/9/2026, 8:09:46 PM]_POST_/api/v1/login_pchstr must be a non-empty string
+[11/9/2026, 8:11:08 PM]_POST_/api/v1/login_pchstr must be a non-empty string
+[11/9/2026, 8:11:10 PM]_POST_/api/v1/login_pchstr must be a non-empty string
+[11/9/2026, 8:11:45 PM]_POST_/api/v1/login_pchstr must be a non-empty string
+[11/9/2026, 8:46:37 PM]_POST_/api/v1/login_Cannot read properties of undefined (reading 'length')

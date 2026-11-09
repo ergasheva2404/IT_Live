@@ -25,7 +25,7 @@ class UserServices {
             if (existUser.rows.length) {
                 return {
                     status: 409,
-                    message: "User allready exists!"
+                    message: "User already exists!"
                 }
             }
 

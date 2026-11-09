@@ -20,7 +20,7 @@ else{
      fs.appendFileSync(path.join(process.cwd(), "src", "log", "logger.txt"), 
     `[${new Date().toLocaleString()}]_${req.method}_${req.url}_${error.message}\n`)
 
-    res.status(error.status).json({
+    res.status(error.status || 500).json({
         status:error.status, 
         message:"Internal Server Error"
    })

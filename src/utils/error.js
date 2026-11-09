@@ -29,3 +29,18 @@ export class BadRequestErorr extends Error {
         this.message  = message
     }
 }
+
+export class UnauthorizedError extends Error {
+    constructor (status, message) {
+        super()
+        this.status = status
+        this.message  = message
+    }
+}
+export class ForbiddenError extends Error {
+    constructor (status, message) {
+        super()
+        this.status = status
+        this.message  = message
+    }
+}
