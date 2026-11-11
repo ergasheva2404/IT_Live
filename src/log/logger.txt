@@ -12,3 +12,20 @@
 [11/9/2026, 8:11:10 PM]_POST_/api/v1/login_pchstr must be a non-empty string
 [11/9/2026, 8:11:45 PM]_POST_/api/v1/login_pchstr must be a non-empty string
 [11/9/2026, 8:46:37 PM]_POST_/api/v1/login_Cannot read properties of undefined (reading 'length')
+[11/11/2026, 8:54:22 PM]_GET_/api/v1/teachers/all_Cannot read properties of undefined (reading 'id')
+[11/11/2026, 9:28:21 PM]_POST_/api/v1/teachers_next is not a function
+[11/11/2026, 9:28:45 PM]_POST_/api/v1/roles_ReferenceError: a is not defined
+[11/11/2026, 9:32:01 PM]_GET_/api/v1/teachers/all_Cannot read properties of undefined (reading 'id')
+[11/11/2026, 9:35:41 PM]_POST_/api/v1/teachers_next is not a function
+[11/11/2026, 9:42:51 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/11/2026, 9:48:17 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/11/2026, 9:48:44 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/11/2026, 10:07:10 PM]_GET_/api/v1/teachers/all_column u.job does not exist
+[11/11/2026, 10:09:00 PM]_GET_/api/v1/teachers/all_column u.job does not exist
+[11/11/2026, 10:10:09 PM]_GET_/api/v1/teachers/all_relation "teacher_profile" does not exist
+[11/11/2026, 10:10:57 PM]_GET_/api/v1/teachers/all_missing FROM-clause entry for table "m"
+[11/11/2026, 10:11:34 PM]_GET_/api/v1/teachers/all_missing FROM-clause entry for table "t"
+[11/11/2026, 10:11:36 PM]_GET_/api/v1/teachers/all_missing FROM-clause entry for table "t"
+[11/12/2026, 1:18:48 AM]_GET_/api/v1/admins_error: column "roles_id" does not exist
+[11/12/2026, 1:29:04 AM]_POST_/api/v1/courses_Cannot destructure property 'name' of 'req.body' as it is undefined.
+[11/12/2026, 1:31:33 AM]_POST_/api/v1/courses_Cannot destructure property 'name' of 'req.body' as it is undefined.

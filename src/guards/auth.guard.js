@@ -1,24 +1,26 @@
 import jwt from "jsonwebtoken"
-import { BadRequestErorr, InternalServerError, UnauthorizedError } from "../utils/error.js"
+import { BadRequestErorr } from "../utils/error.js"
 
 export default (req, res, next) => {
     try {
         const { token } = req.headers
 
         if (!token) {
-            return next(new UnauthorizedError(401, "Unathorized user"))
+            return next(new UnauthorizedError(401, "Unauthorized user"))
         }
 
-        const user = jwt.verify(token.process.env.JWT_SECRET)
-        req.user = user
+        req.user = jwt.verify(token, process.env.JWT_SECRET)
+        return next()
 
-        next()
 
     } catch (error) {
-        if (error) {
-            return next(new BadRequestErorr(400, "Invalid token"))
+        if (error.name == "JsonWebTokenError") {
+            return next(new BadRequestErorr(400, "Invalid or expired token"))
         }
 
-        next(new InternalServerError(500, error))
+        if (error.name == "TokenExpiredError"){
+          return next(new BadRequestErorr(400, error.message))
+        }
+
     }
 }

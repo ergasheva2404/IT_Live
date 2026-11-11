@@ -14,7 +14,6 @@ class RoleService {
     async createRole(req, next) {
         try {
             const { name } = req.body
-            console.log(a)
             const existRole = await pool.query("select * from roles where name=$1", [name])
             if (existRole.rows.length) {
                 return next(new ConflictError(409, "Role already exists"))
