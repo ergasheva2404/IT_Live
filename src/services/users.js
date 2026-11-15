@@ -6,7 +6,7 @@ class UserServices {
 
     async getAdmins(next) {
         try {
-            const role = await pool.query("select users.id, fullname, phone, photo, users.created_at, users.status, roles.name as role from users inner join roles on roles_id = users.role_id where roles.name='admin'")
+            const role = await pool.query("select users.id, fullname, phone, photo, users.created_at, users.status, roles.name as role from users inner join roles on roles.id = users.role_id where lower(roles.name) = 'admin'")
 
             return {
                 status: 200,
@@ -17,40 +17,40 @@ class UserServices {
         }
     }
 
-    async createAdmin(req) {
-        try {
-            const { fullname, phone, password, role_id } = req.body
+    async createAdmin(req, next) { 
+    try {
+        const { fullname, phone, password, role_id } = req.body
 
-            const existUser = await pool.query("select * from users where phone=$1", [phone])
-            if (existUser.rows.length) {
-                return {
-                    status: 409,
-                    message: "User already exists!"
-                }
-            }
-
-            const existRole = await pool.query("select * from roles where id=$1", [role_id])
-            if (!existRole.rows.length) {
-                return {
-                    status: 404,
-                    message: "Role not found with this id!"
-                }
-            }
-
-            const hashPassword = await argon.hash(password)
-
-            await pool.query(`insert into users (fullname, phone, password, role_id) values ($1, $2, $3, $4)`,
-                [fullname, phone, hashPassword, role_id])
-
+        const existUser = await pool.query("select * from users where phone=$1", [phone])
+        if (existUser.rows.length) {
             return {
-                status: 201,
-                message: "User created!"
+                status: 409,
+                message: "User already exists!"
             }
-
-        } catch (error) {
-            next(new InternalServerError(500, error))
         }
+
+        const existRole = await pool.query("select * from roles where id=$1", [role_id])
+        if (!existRole.rows.length) {
+            return {
+                status: 404,
+                message: "Role not found with this id!"
+            }
+        }
+
+        const hashPassword = await argon.hash(password)
+
+        await pool.query(`insert into users (fullname, phone, password, role_id) values ($1, $2, $3, $4)`,
+            [fullname, phone, hashPassword, role_id])
+
+        return {
+            status: 201,
+            message: "User created!"
+        }
+
+    } catch (error) {
+        next(new InternalServerError(500, error)) 
     }
+}
     async createTeacher(req, next) {
 
         try {

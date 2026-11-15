@@ -12,7 +12,7 @@ async getAllCategories(){
     }
 }
 
-    async createCategory(req,res){
+    async createCategory(req,next){
        const { name } = req.body
 
        const existCategory = await pool.query("select * from categories where name = $1", [name])

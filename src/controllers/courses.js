@@ -2,12 +2,41 @@ import courseService from "../services/courses.js";
 
 class CourseController {
 
-    async createCourse(req,res, next) {
-        let resData = await courseService.createCourse(req,next) 
-        if(resData){
+    async getCourses(req, res, next) {
+        let resData = await courseService.getCourses(req, next)
+        if (resData) {
             return res.status(resData.status).json(resData)
         }
     }
+
+    async getMyCourses(req,res,next) {
+        let resData = await courseService.getMyCourses(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
+    async getAllCourses(req, res, next) {
+        let resData = await courseService.getAllCourses(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
+    async createCourse(req, res, next) {
+        let resData = await courseService.createCourse(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
+    async CourseApprove(req, res, next) {
+        let resData = await courseService.CourseApprove(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
 }
 
 const courseController = new CourseController()

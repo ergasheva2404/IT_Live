@@ -29,3 +29,24 @@
 [11/12/2026, 1:18:48 AM]_GET_/api/v1/admins_error: column "roles_id" does not exist
 [11/12/2026, 1:29:04 AM]_POST_/api/v1/courses_Cannot destructure property 'name' of 'req.body' as it is undefined.
 [11/12/2026, 1:31:33 AM]_POST_/api/v1/courses_Cannot destructure property 'name' of 'req.body' as it is undefined.
+[11/13/2026, 4:21:59 PM]_GET_/api/v1/admins_error: column "roles_id" does not exist
+[11/13/2026, 4:35:13 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/13/2026, 4:36:48 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/13/2026, 4:45:35 PM]_POST_/api/v1/courses_column "user_id" of relation "courses" does not exist
+[11/13/2026, 4:56:08 PM]_POST_/api/v1/courses_next is not a function
+[11/14/2026, 4:32:12 PM]_POST_/api/v1/courses_next is not a function
+[11/14/2026, 4:41:35 PM]_POST_/api/v1/courses_column "user_id" of relation "courses" does not exist
+[11/14/2026, 4:41:49 PM]_POST_/api/v1/courses_column "user_id" of relation "courses" does not exist
+[11/14/2026, 5:20:39 PM]_POST_/api/v1/categories_next is not defined
+[11/14/2026, 5:21:34 PM]_POST_/api/v1/categories_undefined
+[11/14/2026, 5:31:08 PM]_GET_/api/v1/courses/all_Invalid status code: undefined. Status code must be an integer.
+[11/14/2026, 8:31:25 PM]_GET_/api/v1/courses_column "aprove" does not exist
+[11/14/2026, 8:45:07 PM]_PUT_/api/v1/courses/approve/1_bind message supplies 1 parameters, but prepared statement "" requires 0
+[11/14/2026, 8:57:34 PM]_GET_/api/v1/courses/my_Cannot destructure property 'name' of 'req.body' as it is undefined.
+[11/14/2026, 9:12:14 PM]_POST_/api/v1/courses_duplicate key value violates unique constraint "courses_name_key"
+[11/14/2026, 10:15:34 PM]_POST_/api/v1/sections_Cannot access 'existCourse' before initialization
+[11/15/2026, 3:05:07 PM]_POST_/api/v1/sections_column "course_id" does not exist
+[11/15/2026, 3:05:35 PM]_POST_/api/v1/sections_column "course_id" does not exist
+[11/15/2026, 3:05:46 PM]_POST_/api/v1/sections_column "course_id" does not exist
+[11/15/2026, 3:05:47 PM]_POST_/api/v1/sections_column "course_id" does not exist
+[11/15/2026, 3:31:56 PM]_GET_/api/v1/sections/1_Cannot read properties of undefined (reading 'id')
