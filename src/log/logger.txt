@@ -50,3 +50,14 @@
 [11/15/2026, 3:05:46 PM]_POST_/api/v1/sections_column "course_id" does not exist
 [11/15/2026, 3:05:47 PM]_POST_/api/v1/sections_column "course_id" does not exist
 [11/15/2026, 3:31:56 PM]_GET_/api/v1/sections/1_Cannot read properties of undefined (reading 'id')
+[11/16/2026, 6:40:18 PM]_POST_/api/v1/lessons_syntax error at end of input
+[11/16/2026, 7:11:32 PM]_POST_/api/v1/lessons_syntax error at end of input
+[11/16/2026, 11:38:55 PM]_POST_/api/v1/materials_lessonsService is not defined
+[11/16/2026, 11:39:33 PM]_POST_/api/v1/materials_lessonsService is not defined
+[11/16/2026, 11:39:36 PM]_POST_/api/v1/materials_lessonsService is not defined
+[11/16/2026, 11:42:14 PM]_POST_/api/v1/materials_lessonsService is not defined
+[11/16/2026, 11:44:09 PM]_POST_/api/v1/materials_lessonsService is not defined
+[11/16/2026, 11:48:15 PM]_POST_/api/v1/materials_name is not defined
+[11/16/2026, 11:51:18 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
+[11/16/2026, 11:52:55 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
+[11/16/2026, 11:56:21 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
