@@ -61,3 +61,7 @@
 [11/16/2026, 11:51:18 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
 [11/16/2026, 11:52:55 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
 [11/16/2026, 11:56:21 PM]_POST_/api/v1/materials_materialsService.createMaterial is not a function
+[11/19/2026, 5:01:54 PM]_POST_/api/v1/register_Class constructor ConflictError cannot be invoked without 'new'
+[11/19/2026, 5:02:55 PM]_POST_/api/v1/register_null value in column "role_id" of relation "users" violates not-null constraint
+[11/19/2026, 5:03:55 PM]_POST_/api/v1/register_insert or update on table "payments" violates foreign key constraint "payments_student_id_fkey"
+[11/19/2026, 5:05:26 PM]_POST_/api/v1/register_insert or update on table "payments" violates foreign key constraint "payments_student_id_fkey"
