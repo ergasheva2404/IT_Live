@@ -6,7 +6,7 @@ import {roleGuard} from "../guards/role.guard.js"
 const router = express.Router()
 
 router
-.get("/sections/:courseId", authGuard, roleGuard("admin", "teacher"), sectionController.getSectionsById)
+.get("/sections/:courseId", authGuard, roleGuard("admin", "teacher", "student"), sectionController.getSectionsById)
 .post ("/sections", authGuard, roleGuard("teacher", "admin"), sectionController.createSection)
 
 

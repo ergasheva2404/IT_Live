@@ -65,3 +65,12 @@
 [11/19/2026, 5:02:55 PM]_POST_/api/v1/register_null value in column "role_id" of relation "users" violates not-null constraint
 [11/19/2026, 5:03:55 PM]_POST_/api/v1/register_insert or update on table "payments" violates foreign key constraint "payments_student_id_fkey"
 [11/19/2026, 5:05:26 PM]_POST_/api/v1/register_insert or update on table "payments" violates foreign key constraint "payments_student_id_fkey"
+[11/20/2026, 4:58:04 PM]_GET_/api/v1/students/courses_next is not a function
+[11/20/2026, 4:58:52 PM]_GET_/api/v1/students/courses_missing FROM-clause entry for table "user"
+[11/20/2026, 5:00:54 PM]_GET_/api/v1/students/courses_missing FROM-clause entry for table "user"
+[11/20/2026, 6:42:54 PM]_POST_/api/v1/students/courses/buy:3_invalid input syntax for type integer: "{"courseId":":3"}"
+[11/20/2026, 6:44:29 PM]_POST_/api/v1/students/courses/buy/3_invalid input syntax for type integer: "{"courseId":"3"}"
+[11/20/2026, 6:45:47 PM]_POST_/api/v1/students/courses/buy/3_syntax error at or near "$"
+[11/20/2026, 6:45:52 PM]_POST_/api/v1/students/courses/buy/3_syntax error at or near "$"
+[11/20/2026, 6:48:02 PM]_POST_/api/v1/students/courses/buy/3_undefined
+[11/20/2026, 7:54:19 PM]_POST_/api/v1/register_ForbiddenError is not defined

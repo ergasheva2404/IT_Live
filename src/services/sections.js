@@ -4,9 +4,10 @@ import { ConflictError, ForbiddenError, NotFoundError, InternalServerError } fro
 class SectionService {
 
     async getSectionsById(req, next) {
+        console.log("SHU YERGA KELDI:", req.user, req.params)
         try {
             const { courseId } = req.params
-            const teacherId = req.user.id
+            const userId = req.user.id
 
             const existCourse = await pool.query("select * from courses where id=$1", [courseId])
 
@@ -14,17 +15,23 @@ class SectionService {
                 return next(new NotFoundError(404, "Course not found"))
             }
 
-            if (req.user.role=="teacher" && teacherId != existCourse.rows[0].user_id) {
+            if (req.user.role == "teacher" && userId != existCourse.rows[0].user_id) {
                 return next(new ForbiddenError(403, "You cannot add section to this course"))
+            }
+            if (req.user.role.toLowerCase() === "student") {
+                const payments = await pool.query("select * from payments where student_id=$1 and course_id=$2", [userId, courseId])
+                if (!payments.rows.length) {
+                return next(new ForbiddenError(403, "You cannot get sections of this course"))
+                }
             }
 
             const sections = await pool.query("select * from sections where course_id=$1", [courseId])
 
             return {
-                status:200,
-                data:sections.rows
+                status: 200,
+                data: sections.rows
             }
-          
+
         } catch (error) {
             return next(new InternalServerError(500, error.message))
         }
