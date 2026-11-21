@@ -31,7 +31,6 @@ class AuthService {
             refreshToken: jwt.sign({ id: existUser.id, phone: existUser.phone, role: role.rows[0].name }, "Shaptoli", { expiresIn: "24h" })
         }
     }
-
     async register(req, next) {
         const { fullname, phone, password, role_id, course_id } = req.body
 
@@ -41,14 +40,14 @@ class AuthService {
             return next(new ConflictError(409, "Student already has been registered with this phone"))
         }
 
-         const existCourse = await pool.query("select * from courses where id=$1", [course_id])
+        const existCourse = await pool.query("select * from courses where id=$1", [course_id])
 
-            if (!existCourse.rows.length) {
-                return next(new NotFoundError(404, "Course not found"))
-            }
-            if(!existCourse.rows[0].approved){
-                return next (new ForbiddenError(403, "You cannot buy this course!"))
-            }
+        if (!existCourse.rows.length) {
+            return next(new NotFoundError(404, "Course not found"))
+        }
+        if (!existCourse.rows[0].approved) {
+            return next(new ForbiddenError(403, "You cannot buy this course!"))
+        }
         const hashPassword = await argon.hash(password)
 
         let student = await pool.query("insert into users( fullname, phone, password, role_id) values ($1, $2, $3, $4) returning id", [fullname, phone, hashPassword, role_id])

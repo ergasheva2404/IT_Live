@@ -17,6 +17,20 @@ class LessonController{
             return res.status(resData.status).json(resData)
         }
     }
+        async updateLesson(req,res,next) {
+        let resData = await lessonsService.updateLesson(req,next)
+
+        if(resData){
+            return res.status(resData.status).json(resData)
+        }
+    }
+    async deleteLesson(req,res,next) {
+        let resData = await lessonsService.deleteLesson(req,next)
+
+        if(resData){
+            return res.status(resData.status).json(resData)
+        }
+    }
 }
 
 const lessonsController = new LessonController()

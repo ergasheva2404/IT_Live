@@ -8,9 +8,20 @@ class SectionController {
             return res.status(resData.status).json(resData)
         }
     }
-
     async createSection(req, res, next) {
         const resData = await sectionService.createSection(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+    async updateSection(req, res, next) {
+        const resData = await sectionService.updateSection(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+    async deleteSection(req, res, next) {
+        const resData = await sectionService.deleteSection(req, next)
         if (resData) {
             return res.status(resData.status).json(resData)
         }

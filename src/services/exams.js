@@ -4,7 +4,7 @@ import { BadRequestErorr, ConflictError, ForbiddenError, NotFoundError } from ".
 
 class ExamsService {
 
- async getAllExams(req, next) {
+    async getAllExams(req, next) {
         const { lessonId } = req.params
         const teacherId = req.user.user_id
 
@@ -23,9 +23,9 @@ class ExamsService {
             status: 200,
             data: exams.rows
         }
-    } 
+    }
     async createExam(req, next) {
-        const { lesson_id, question, variantA, variantB, variantC, variantD, answer} = req.body
+        const { lesson_id, question, variantA, variantB, variantC, variantD, answer } = req.body
 
 
         const existsLesson = await pool.query("select c.user_id from lessons l inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where l.id=$1", [lesson_id])
@@ -50,6 +50,50 @@ class ExamsService {
         return {
             status: 201,
             message: "Exam created!"
+        }
+    }
+    async updateExam(req, next) {
+        const { examId } = req.params
+        const { question, variantA, variantB, variantC, variantD, answer } = req.body
+
+        const existExam = await pool.query("select e.*, c.user_id as owner_id from exams e inner join lessons l on e.lesson_id = l.id inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where e.id=$1", [examId])
+        if (!existExam.rows.length) {
+            return next(new NotFoundError(404, "Exam not found"))
+        }
+
+        if (req.user.role.toLowerCase() == "teacher" && req.user.id != existExam.rows[0].owner_id) {
+            return next(new ForbiddenError(403, "You cannot update this exam"))
+        }
+
+        const existsQuestion = await pool.query("select * from exams where question=$1 and lesson_id=$2 and id<>$3", [question, existExam.rows[0].lesson_id, examId])
+        if (existsQuestion.rows.length) {
+            return next(new ConflictError(409, "This question already exists on this exam"))
+        }
+
+        await pool.query(`update exams set question=coalesce($1, question), variantA=coalesce($2, variantA), variantB=coalesce($3, variantB), variantC=coalesce($4, variantC), variantD=coalesce($5, variantD), answer=coalesce($6, answer) where id=$7`, [question ?? null, variantA ?? null, variantB ?? null, variantC ?? null, variantD ?? null, answer ?? null, examId])
+
+        return {
+            status: 200,
+            message: "Exam updated!"
+        }
+    }
+    async deleteExam(req, next) {
+        const { examId } = req.params
+
+        const existExam = await pool.query("select e.*, c.user_id as owner_id from exams e inner join lessons l on e.lesson_id = l.id inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where e.id=$1", [examId])
+        if (!existExam.rows.length) {
+            return next(new NotFoundError(404, "Exam not found"))
+        }
+
+        if (req.user.role.toLowerCase() == "teacher" && req.user.id != existExam.rows[0].owner_id) {
+            return next(new ForbiddenError(403, "You cannot delete this exam"))
+        }
+
+        await pool.query("delete from exams where id=$1", [examId])
+
+        return {
+            status: 200,
+            message: "Exam deleted!"
         }
     }
 

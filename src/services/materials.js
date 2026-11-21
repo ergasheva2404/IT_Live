@@ -1,5 +1,6 @@
 import pool from "../config/db.js"
 import { extname, join } from "path"
+import fs from "fs"
 import { BadRequestErorr, ConflictError, ForbiddenError, NotFoundError } from "../utils/error.js"
 
 class MaterialsService {
@@ -49,8 +50,8 @@ class MaterialsService {
 
         const allowedFileType = [".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx", ".txt", ".jpeg", ".jpg"]
 
-        if(!allowedFileType.includes(extname(file.name))) {
-            return next (new BadRequestErorr(400, "Invalid file type"))
+        if (!allowedFileType.includes(extname(file.name))) {
+            return next(new BadRequestErorr(400, "Invalid file type"))
         }
 
         await pool.query(`insert into materials (description, lesson_id, file) values ($1, $2, $3)`, [description, lesson_id, filename])
@@ -63,6 +64,82 @@ class MaterialsService {
         return {
             status: 201,
             message: "Material added!"
+        }
+    }
+    async updateMaterial(req, next) {
+        const { materialId } = req.params
+        const { description } = req.body
+        const file = req.files?.file
+
+        const existMaterial = await pool.query("select m.*, c.user_id as owner_id from materials m inner join lessons l on m.lesson_id = l.id inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where m.id=$1", [materialId])
+        if (!existMaterial.rows.length) {
+            return next(new NotFoundError(404, "Material not found"))
+        }
+
+        if (req.user.role.toLowerCase() == "teacher" && req.user.id != existMaterial.rows[0].owner_id) {
+            return next(new ForbiddenError(403, "You cannot update this material"))
+        }
+
+        let filename = null
+
+        if (file) {
+            const allowedFileType = [".pdf", ".doc", ".docx", ".ppt", ".pptx", ".xls", ".xlsx", ".txt", ".jpeg", ".jpg"]
+
+            if (!allowedFileType.includes(extname(file.name).toLowerCase())) {
+                return next(new BadRequestErorr(400, "Invalid file type"))
+            }
+
+            filename = Date.now() + extname(file.name)
+        }
+
+        await pool.query("update materials set description=coalesce($1, description), file=coalesce($2, file) where id=$3", [description ?? null, filename, materialId])
+
+        if (file) {
+            file.mv(join(process.cwd(), "src", "uploads", filename), err => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+
+            if (existMaterial.rows[0].file) {
+                fs.unlink(join(process.cwd(), "src", "uploads", existMaterial.rows[0].file), err => {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+            }
+        }
+
+        return {
+            status: 200,
+            message: "Material updated!"
+        }
+    }
+    async deleteMaterial(req, next) {
+        const { materialId } = req.params
+
+        const existMaterial = await pool.query("select m.*, c.user_id as owner_id from materials m inner join lessons l on m.lesson_id = l.id inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where m.id=$1", [materialId])
+        if (!existMaterial.rows.length) {
+            return next(new NotFoundError(404, "Material not found"))
+        }
+
+        if (req.user.role.toLowerCase() == "teacher" && req.user.id != existMaterial.rows[0].owner_id) {
+            return next(new ForbiddenError(403, "You cannot delete this material"))
+        }
+
+        await pool.query("delete from materials where id=$1", [materialId])
+
+        if (existMaterial.rows[0].file) {
+            fs.unlink(join(process.cwd(), "src", "uploads", existMaterial.rows[0].file), err => {
+                if (err) {
+                    console.log(err)
+                }
+            })
+        }
+
+        return {
+            status: 200,
+            message: "Material deleted!"
         }
     }
 

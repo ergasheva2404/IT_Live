@@ -37,6 +37,20 @@ class CourseController {
         }
     }
 
+    async updateCourse(req, res, next) {
+        let resData = await courseService.updateCourse(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
+    async deleteCourse(req, res, next) {
+        let resData = await courseService.deleteCourse(req, next)
+        if (resData) {
+            return res.status(resData.status).json(resData)
+        }
+    }
+
 }
 
 const courseController = new CourseController()

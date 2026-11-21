@@ -22,7 +22,7 @@ export class StudentsService {
             })
 
             return {
-                status:200,
+                status: 200,
                 data: courses
             }
 
@@ -32,7 +32,6 @@ export class StudentsService {
 
 
     }
-
     async buyCourse(req, next) {
         const studentId = req.user.id
         const { courseId } = req.params

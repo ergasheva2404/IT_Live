@@ -74,3 +74,9 @@
 [11/20/2026, 6:45:52 PM]_POST_/api/v1/students/courses/buy/3_syntax error at or near "$"
 [11/20/2026, 6:48:02 PM]_POST_/api/v1/students/courses/buy/3_undefined
 [11/20/2026, 7:54:19 PM]_POST_/api/v1/register_ForbiddenError is not defined
+[11/21/2026, 1:27:40 PM]_DELETE_/api/v1/courses/9_unlink is not defined
+[11/21/2026, 4:35:43 PM]_POST_/api/v1/sections_duplicate key value violates unique constraint "sections_name_key"
+[11/21/2026, 4:39:53 PM]_PUT_/api/v1/sections/8_Cannot destructure property 'name' of 'req.body' as it is undefined.
+[11/21/2026, 4:59:53 PM]_PUT_/api/v1/tasks/3_tasksService is not defined
+[11/21/2026, 5:00:41 PM]_PUT_/api/v1/tasks/3_tasksService is not defined
+[11/21/2026, 5:02:19 PM]_GET_/api/v1/tasks/1_TasksService is not defined
