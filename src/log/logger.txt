@@ -80,3 +80,14 @@
 [11/21/2026, 4:59:53 PM]_PUT_/api/v1/tasks/3_tasksService is not defined
 [11/21/2026, 5:00:41 PM]_PUT_/api/v1/tasks/3_tasksService is not defined
 [11/21/2026, 5:02:19 PM]_GET_/api/v1/tasks/1_TasksService is not defined
+[11/24/2026, 2:57:31 PM]_PUT_/api/v1/users/32_ConflictError is not defined
+[11/24/2026, 2:58:59 PM]_POST_/api/v1/register_insert or update on table "users" violates foreign key constraint "users_role_id_fkey"
+[11/24/2026, 3:15:26 PM]_POST_/api/v1/teachers_error: duplicate key value violates unique constraint "users_phone_key"
+[11/24/2026, 3:19:42 PM]_POST_/api/v1/teachers_error: syntax error at eion "cond of input
+[11/24/2026, 3:32:43 PM]_POST_/api/v1/courses_new row for relaturses" violates check constraint "courses_level_check"
+[11/24/2026, 3:34:46 PM]_POST_/api/v1/courses_ConflictError is not defined
+[11/24/2026, 3:35:01 PM]_POST_/api/v1/courses_BadRequestErorr is not defined
+[11/24/2026, 3:57:43 PM]_POST_/api/v1/lessons_duplicate key value violates unique constraint "lessons_name_key"
+[11/24/2026, 3:59:56 PM]_POST_/api/v1/lessons_duplicate key value violates unique constraint "lessons_name_key"
+[11/24/2026, 4:45:04 PM]_POST_/api/v1/tasks_TasksService is not defined
+[11/24/2026, 4:46:03 PM]_POST_/api/v1/tasks_TasksService is not defined

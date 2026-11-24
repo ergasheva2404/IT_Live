@@ -19,6 +19,9 @@ class ExamsService {
         }
 
         const exams = await pool.query("select * from exams where lesson_id=$1", [lessonId])
+        if (!exams.rows.length) {
+            return next(new NotFoundError(404, "Exam has not created yet, for this lesson"))
+        }
         return {
             status: 200,
             data: exams.rows

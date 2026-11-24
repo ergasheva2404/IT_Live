@@ -2,7 +2,7 @@ import pool from "../config/db.js"
 import { extname, join } from "path"
 import { unlink } from "fs/promises"
 import { existsSync } from "fs"
-import { ForbiddenError, InternalServerError, NotFoundError } from "../utils/error.js" 
+import { BadRequestErorr, ConflictError, ForbiddenError, InternalServerError, NotFoundError } from "../utils/error.js"
 
 class CourseService {
 
@@ -22,13 +22,13 @@ class CourseService {
             data: courses.rows
         }
     }
-    async getMyCourses (req,next){
+    async getMyCourses(req, next) {
         const teacherId = req.user.id
         const courses = await pool.query(`select * from courses where user_id=${teacherId}`)
 
-        return{
-            status:200,
-            data:courses.rows
+        return {
+            status: 200,
+            data: courses.rows
         }
     }
     async createCourse(req, next) {
@@ -74,23 +74,29 @@ class CourseService {
             }
 
         } catch (error) {
+            if (error.code === "23514") {
+                return next(new BadRequestErorr(400, "Invalid level value"))
+            }
+            if (error.code === "23505") {
+                return next(new ConflictError(409, "Course with this name already exists!"))
+            }
             return next(new InternalServerError(500, error.message))
         }
     }
-    async CourseApprove (req, next) {
-          const { courseId } = req.params
-       const existCourse = await pool.query("select * from courses where id=$1", [courseId])
+    async CourseApprove(req, next) {
+        const { courseId } = req.params
+        const existCourse = await pool.query("select * from courses where id=$1", [courseId])
 
-       if(!existCourse.rows.length){
-        next(new NotFoundError(404, "Course not found"))
-       }
+        if (!existCourse.rows.length) {
+            next(new NotFoundError(404, "Course not found"))
+        }
 
-       await pool.query(`update courses set approved=${existCourse.rows[0].approved ? false : true} where id=$1`, [courseId])
+        await pool.query(`update courses set approved=${existCourse.rows[0].approved ? false : true} where id=$1`, [courseId])
 
-       return {
-        status:200,
-        message:"Course's status was changed"
-       }
+        return {
+            status: 200,
+            message: "Course's status was changed"
+        }
     }
     async updateCourse(req, next) {
         try {
@@ -191,7 +197,7 @@ class CourseService {
             return next(new InternalServerError(500, error.message))
         }
     }
-    
+
 }
 
 const courseService = new CourseService()

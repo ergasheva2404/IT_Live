@@ -4,7 +4,6 @@ import { ConflictError, ForbiddenError, NotFoundError, InternalServerError } fro
 class SectionService {
 
     async getSectionsById(req, next) {
-        console.log("SHU YERGA KELDI:", req.user, req.params)
         try {
             const { courseId } = req.params
             const userId = req.user.id

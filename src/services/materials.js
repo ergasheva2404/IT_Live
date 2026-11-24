@@ -68,7 +68,7 @@ class MaterialsService {
     }
     async updateMaterial(req, next) {
         const { materialId } = req.params
-        const { description } = req.body
+        const { description, lesson_id } = req.body
         const file = req.files?.file
 
         const existMaterial = await pool.query("select m.*, c.user_id as owner_id from materials m inner join lessons l on m.lesson_id = l.id inner join sections s on l.section_id = s.id inner join courses c on s.course_id = c.id where m.id=$1", [materialId])
@@ -78,6 +78,10 @@ class MaterialsService {
 
         if (req.user.role.toLowerCase() == "teacher" && req.user.id != existMaterial.rows[0].owner_id) {
             return next(new ForbiddenError(403, "You cannot update this material"))
+        }
+
+        if (lesson_id !== undefined) {
+            return next(new BadRequestErorr(400, "You cannot change the lesson of a material"))
         }
 
         let filename = null

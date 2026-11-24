@@ -3,7 +3,7 @@ import tasksService from "../services/tasks.js"
 class TasksController {
 
     async getAllTasks(req, res, next) {
-        let resData = await TasksService.getAllTasks(req, next)
+        let resData = await tasksService.getAllTasks(req, next)
 
         if (resData) {
             return res.status(resData.status).json(resData)
@@ -11,7 +11,7 @@ class TasksController {
 
     }
     async createTask(req, res, next) {
-        let resData = await TasksService.createTask(req, next)
+        let resData = await tasksService.createTask(req, next)
 
         if (resData) {
             return res.status(resData.status).json(resData)

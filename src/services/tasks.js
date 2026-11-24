@@ -70,12 +70,12 @@ class TasksService {
     async updateTask(req, next) {
         try {
             const { taskId } = req.params
-            const { description } = req.body
+            const { description, lesson_id } = req.body
             const userId = req.user.id || req.user.user_id
 
             const existTask = await pool.query(`select t.*, c.user_id as teacher_id from tasks t inner join lessons l on t.lesson_id = l.id 
                  inner join sections s on l.section_id = s.id
-                 inner join courses c on s.course_id = c.id where t.id = $1`,[taskId])
+                 inner join courses c on s.course_id = c.id where t.id = $1`, [taskId])
 
             if (!existTask.rows.length) {
                 return next(new NotFoundError(404, "Task not found"))
@@ -85,6 +85,9 @@ class TasksService {
 
             if (req.user.role.toLowerCase() === "teacher" && task.teacher_id != userId) {
                 return next(new ForbiddenError(403, "You cannot update this task"))
+            }
+            if (lesson_id !== undefined) {
+                return next(new BadRequestErorr(400, "You cannot change the lesson of a material"))
             }
 
             let filename = task.file
@@ -127,7 +130,7 @@ class TasksService {
             const existTask = await pool.query(`select t.*, c.user_id as teacher_id from tasks t
                  inner join lessons l on t.lesson_id = l.id
                  inner join sections s on l.section_id = s.id
-                 inner join courses c on s.course_id = c.id where t.id = $1`,[taskId])
+                 inner join courses c on s.course_id = c.id where t.id = $1`, [taskId])
 
             if (!existTask.rows.length) {
                 return next(new NotFoundError(404, "Task not found"))

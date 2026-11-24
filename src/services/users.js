@@ -1,6 +1,6 @@
 import pool from "../config/db.js"
 import argon from "argon2"
-import { InternalServerError, NotFoundError } from "../utils/error.js"
+import { ConflictError, ForbiddenError, InternalServerError, NotFoundError } from "../utils/error.js"
 
 class UserServices {
 
@@ -74,13 +74,15 @@ class UserServices {
                     linkedIn ?? null
                 ]
             )
-
             return {
                 status: 201,
                 message: "Teacher created!"
             }
 
         } catch (error) {
+            if (error.code === "23505") {
+                return next(new ConflictError(409, "User already registered with this phone number!"))
+            }
             next(new InternalServerError(500, error))
         }
 

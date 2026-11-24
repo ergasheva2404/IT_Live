@@ -97,7 +97,7 @@ class TeacherService {
 
         } catch (error) {
             if (error.code === "23505") {
-                return next(new ConflictError(409, "Bu telefon raqami allaqachon ro'yxatdan o'tgan"))
+                return next(new ConflictError(409, "User already registered with this phone number!"))
             }
             return next(new InternalServerError(500, error.message))
         }
@@ -111,17 +111,13 @@ class TeacherService {
                  INNER JOIN roles r ON u.role_id = r.id 
                  WHERE u.id = $1 AND lower(r.name) = 'teacher'`,
                 [teacherId]
-            );
+            )
 
             if (!existTeacher.rows.length) {
-                return next(new NotFoundError(404, "Teacher not found"));
+                return next(new NotFoundError(404, "Teacher not found"))
             }
-
-            // Avval mentor_profile dagi bog'liq ma'lumotni o'chiramiz
-            await pool.query("DELETE FROM mentor_profile WHERE user_id=$1", [teacherId]);
-
-            // Keyin users jadvalidan o'chiramiz
-            await pool.query("DELETE FROM users WHERE id=$1", [teacherId]);
+            await pool.query("DELETE FROM mentor_profile WHERE user_id=$1", [teacherId])
+            await pool.query("DELETE FROM users WHERE id=$1", [teacherId])
 
             return {
                 status: 200,
@@ -129,9 +125,8 @@ class TeacherService {
             };
 
         } catch (error) {
-            // Agar teacherning kurslari (courses) mavjud bo'lsa
             if (error.code === "23503") {
-                return next(new ConflictError(409, "Bu o'qituvchiga tegishli kurslar mavjud, avval ularni o'chiring"));
+                return next(new ConflictError(409, "This teacher has courses, you cannot delete the profile"));
             }
             return next(new InternalServerError(500, error.message));
         }

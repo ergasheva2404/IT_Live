@@ -9,7 +9,7 @@ const router = express.Router()
 router
 .get("/admins", userController.getAdmins)
 .post ("/admins", authGuard, roleGuard("admin"), middleware.createUsers, userController.createAdmin)
-.post ("/teachers", userController.createTeacher)
+.post ("/teachers", authGuard, roleGuard("admin"), userController.createTeacher)
 .put("/users/:userId", authGuard, userController.updateUser)
 .delete("/users/:userId", authGuard, roleGuard("admin"), userController.deleteUser)
 
